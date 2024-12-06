@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import loginIcons from "../assets/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import mealSignup from "../assets/foods/mealSignup.jpg";
 import imageTobase64 from "../helpers/imageTobase64";
+import summaryApi from "../common";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +18,8 @@ const SignUp = () => {
     confirmPassword: "",
     profilePic: "",
   });
+  const navigate = useNavigate();
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((preve) => {
@@ -36,8 +40,33 @@ const SignUp = () => {
       };
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      if (data.password === data.confirmPassword) {
+        const dataResponse = await fetch("http://localhost:8080/api/signup", {
+          method: summaryApi.signUp.method,
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const dataApi = await dataResponse.json();
+        console.log(dataApi); // Debug response
+
+        if (dataApi.success) {
+          toast.success(dataApi.message);
+          navigate("/login");
+        } else if (dataApi.error) {
+          toast.error(dataApi.message);
+        }
+      } else {
+        toast.error("Passwords do not match!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong. Please try again later.");
+    }
   };
 
   return (
@@ -124,7 +153,7 @@ const SignUp = () => {
                   className="w-fu
                         ll h-full bg-transparent outline-none"
                   placeholder="enter password"
-                  name="confirm password"
+                  name="confirmPassword"
                   value={data.confirmPassword}
                   required
                   onChange={handleOnChange}
