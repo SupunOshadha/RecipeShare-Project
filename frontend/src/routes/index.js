@@ -5,7 +5,7 @@ import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
 import SignUp from "../pages/SignUp";
 import AddRecipe from "../pages/addrecipe";
-
+import About from "../pages/about";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +32,10 @@ const router = createBrowserRouter([
         path: "/addrecipe",
         element: <AddRecipe />,
         
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
