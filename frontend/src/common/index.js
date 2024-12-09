@@ -9,6 +9,22 @@ const summaryApi = {
     url: `${backendDomain}/api/signin`,
     method: "post",
   },
+  current_user: {
+    url: `${backendDomain}/api/user-details`,
+    method: "get",
+  },
+  logout_user: {
+    url: `${backendDomain}/api/userLogout`,
+    method: "get",
+  },
+  sendOtp: {
+    url: `${backendDomain}/api/send-otp`,
+    method: "post",
+  },
+  resetPassword: {
+    url: `${backendDomain}/api/reset-password`,
+    method: "post",
+  },
 };
 
 export default summaryApi;
