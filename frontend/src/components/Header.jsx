@@ -136,7 +136,7 @@ const Header = () => {
           </div>
 
           <div className=" bg-orange-700 border-b border-orange-500 border rounded-sm hover:bg-red-900  space-x-2  px-2 sm:px-6 lg:px-8 hover:scale-110 transition-all">
-            <Link to="/" className={linkClass}>
+            <Link to="/about" className={linkClass}>
               <button>About us</button>
             </Link>
           </div>
