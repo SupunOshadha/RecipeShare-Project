@@ -8,7 +8,10 @@ const summaryApi = {
   signIn: {
     url: `${backendDomain}/api/signin`,
     method: "post",
-  },
+  },categoryWiseProduct: {
+    url: `${backendDomain}/api/category-product`,
+    method: "post",
+  }
 };
 
 export default summaryApi;
