@@ -7,6 +7,7 @@ import ResetPassword from "../components/ResetPassword";
 import SignUp from "../pages/SignUp";
 import AddRecipe from "../pages/addrecipe";
 import About from "../pages/about";
+import UploadRecipe from "../components/UploadRecipe";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/upload-recipe",
+        element: <UploadRecipe />,
+      }
     ],
   },
 ]);
