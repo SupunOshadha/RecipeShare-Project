@@ -11,7 +11,6 @@ const summaryApi = {
   },categoryWiseProduct: {
     url: `${backendDomain}/api/category-product`,
     method: "post",
-  }
   },
   current_user: {
     url: `${backendDomain}/api/user-details`,
