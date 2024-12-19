@@ -1,8 +1,12 @@
-import React from 'react';
+import React from "react";
+import HorizontalCardProduct from "../components/HorizontalCardProduct";
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <HorizontalCardProduct category={"Indian"} heading={"Indian"} />
+      
+    </>
   );
 };
 

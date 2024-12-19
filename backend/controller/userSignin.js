@@ -43,13 +43,11 @@ async function userSigninController(req, res) {
       throw new Error("Please check password");
     }
   } catch (err) {
-    res.json[
-      {
-        message: err.message || err,
-        error: true,
-        success: false,
-      }
-    ];
+    res.json({
+      message: err.message || "internal server error",
+      error: true,
+      success: false,
+    });
   }
 }
 
