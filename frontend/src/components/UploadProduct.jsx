@@ -215,3 +215,4 @@ const UploadProduct = ({ onClose, fetchData }) => {
 };
 
 export default UploadProduct;
+
