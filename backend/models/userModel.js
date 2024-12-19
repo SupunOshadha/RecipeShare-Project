@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     },
     password: String,
     profilePic: String,
+    role: String,
     resetPasswordToken: String, // Token for password reset
     resetPasswordExpire: Date, // Token expiration time
   },

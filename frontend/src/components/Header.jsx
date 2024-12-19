@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
 import { CiSearch } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import summaryApi from "../common";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
+import ROLE from "../common/role";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log("userheader", user);
+  const [menuDisplay, setMenuDisplay] = useState(false);
 
   const handleLogout = async () => {
     const fetchData = await fetch(summaryApi.logout_user.url, {
@@ -63,14 +65,37 @@ const Header = () => {
 
         <div className="flex items-center gap-7">
           <div className="text-3xl cursor-pointer relative flex">
-            {user?.profilePic ? (
-              <img
-                src={user?.profilePic}
-                className="w-20 h-20 rounded-full"
-                alt={user?.name}
-              />
-            ) : (
-              <FaRegUserCircle />
+            {user?._id && (
+              <div
+                className="text-3xl cursor-pointer relative flex justify-center"
+                onClick={() => setMenuDisplay((preve) => !preve)}
+              >
+                {user?.profilePic ? (
+                  <img
+                    src={user?.profilePic}
+                    className="w-10 h-10 rounded-full"
+                    alt={user?.name}
+                  />
+                ) : (
+                  <FaRegUserCircle />
+                )}
+              </div>
+            )}
+
+            {menuDisplay && (
+              <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded">
+                <nav>
+                  {user?.role === ROLE.ADMIN && (
+                    <Link
+                      to={"/admin-panel/all-products"}
+                      className="text-xl whitespace-nowrap hidden md:block hover:bg-slate-100 p-2"
+                      onClick={() => setMenuDisplay((preve) => !preve)}
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
+                </nav>
+              </div>
             )}
           </div>
           <div>
@@ -105,7 +130,7 @@ const Header = () => {
           </div>
 
           <div className=" bg-orange-700 border-b border-orange-500 border rounded-sm hover:bg-red-900  space-x-2  px-2 sm:px-6 lg:px-8 hover:scale-110 transition-all">
-            <Link to="/login" className={linkClass}>
+            <Link to="/upload-recipe" className={linkClass}>
               <button>Add Recipe</button>
             </Link>
           </div>
