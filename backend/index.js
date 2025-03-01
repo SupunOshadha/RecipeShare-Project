@@ -9,8 +9,7 @@ const router = require("./routes/index");
 const app = express();
 app.use(
   cors({
-    // origin: process.env.FRONTEND_URL,
-    origin: ["https://recipe-share-project.vercel.app/"],
+    origin: ["https://recipe-share-project.vercel.app/"],    // origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
