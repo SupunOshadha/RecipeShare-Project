@@ -8,7 +8,7 @@ const router = require("./routes/index");
 
 const app = express();
 
-// ✅ Fix: Apply CORS Middleware Properly
+// CORS Middleware 
 const allowedOrigins = [
   "https://recipe-share-project.vercel.app",
   "https://recipe-share-project-4mw3kdc7l-supun-oshadhas-projects.vercel.app"
@@ -34,10 +34,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ Fix: Remove redundant manual CORS headers
-// (Express CORS middleware already handles this)
-
-// ✅ Debugging Middleware
+// Middleware debugging
 app.use((req, res, next) => {
   console.log("Request Method:", req.method);
   console.log("Request Headers:", req.headers);
@@ -55,6 +52,21 @@ connectDB().then(() => {
     console.log(`Server is running on port ${PORT}...`);
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
