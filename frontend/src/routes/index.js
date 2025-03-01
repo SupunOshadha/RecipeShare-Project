@@ -10,6 +10,7 @@ import AllUsers from "../pages/AllUsers";
 import UploadRecipe from "../components/UploadRecipe";
 import AllProducts from "../pages/AllProducts";
 import ProductDetails from "../pages/ProductDetails";
+import AboutUs from "../pages/about";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
       },
       {
         path: "/forgot-password",
