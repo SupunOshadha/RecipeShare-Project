@@ -10,7 +10,6 @@ const app = express();
 app.use(
   cors({
     origin: ["https://recipe-share-project.vercel.app"],    // origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
