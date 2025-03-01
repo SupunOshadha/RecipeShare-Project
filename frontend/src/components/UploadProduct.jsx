@@ -198,7 +198,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
           ></textarea>
 
           <button className="px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700">
-            Upload Product
+            Upload Recipe
           </button>
         </form>
       </div>
