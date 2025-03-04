@@ -74,7 +74,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
     if (responseData.success) {
       toast.success(responseData?.message);
-      // onClose()
+       //onClose()
       // fetchData()
     }
 
@@ -84,14 +84,14 @@ const UploadProduct = ({ onClose, fetchData }) => {
   };
 
   return (
-    <div className="fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center">
-      <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden">
+    <div className="fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center ">
+      <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[70%] overflow-hidden mt-10">
         <div className="flex justify-between items-center pb-3">
           <h2 className="font-bold text-lg">Upload Recipe</h2>
           <div
             className="w-fit ml-auto text-2xl hover:text-red-600 cursor-pointer"
             onClick={onClose}
-          >
+          >  
             <CgClose />
           </div>
         </div>
@@ -100,7 +100,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
           className="grid p-4 gap-2 overflow-y-scroll h-full pb-5"
           onSubmit={handleSubmit}
         >
-          <label htmlFor="recipeName">Recipe Name :</label>
+          <label htmlFor="recipeName">Recipe Name : </label>
           <input
             type="text"
             id="recipeName"

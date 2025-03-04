@@ -37,6 +37,8 @@ async function userSigninController(req, res) {
         message: "Login Successfully",
         data: token,
         success: true,
+        secure: true,
+        sameSite: "None",
         error: false,
       });
     } else {
