@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SummaryApi from "../common";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
 import CategroyWiseProductDisplay from "../components/CategroyWiseProductDisplay";
-import { FaShare } from "react-icons/fa6";
 import { FaShareAlt } from "react-icons/fa";
+import Share from "../components/Share";
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -76,6 +76,17 @@ const ProductDetails = () => {
   const handleLeaveImageZoom = () => {
     setZoomImage(false);
   };
+
+  const handleShare = () => {
+    navigate(
+      `/share-recipe?recipeName=${encodeURIComponent(
+        data?.recipeName
+      )}&recipeUrl=${encodeURIComponent(window.location.href)}`
+    );
+  };
+
+  console.log("Recipe Name:", data.recipeName);
+  console.log("Recipe URL:", window.location.href);
 
   return (
     <div className="container mx-auto p-4">
@@ -170,7 +181,11 @@ const ProductDetails = () => {
             <div className="flex-row">
               <h2 className="text-2xl lg:text-4xl font-medium">
                 {data?.recipeName}
-                <button className="bg-red-200 text-red-600 px-2 rounded-full inline-block w-fit">
+
+                <button
+                  className="bg-red-200 text-red-600 px-2 rounded-full inline-block w-fit"
+                  onClick={handleShare}
+                >
                   <FaShareAlt />
                 </button>
               </h2>
@@ -213,6 +228,9 @@ const ProductDetails = () => {
           category={data?.category}
           heading={"Recommended Recipes"}
         />
+      )}
+      {data.recipeName && (
+        <Share recipeName={data.recipeName} recipeUrl={window.location.href} />
       )}
     </div>
   );

@@ -11,6 +11,7 @@ import UploadRecipe from "../components/UploadRecipe";
 import AllProducts from "../pages/AllProducts";
 import ProductDetails from "../pages/ProductDetails";
 import AboutUs from "../pages/about";
+import Share from "../components/Share";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/upload-recipe",
         element: <UploadRecipe />,
+      },
+      {
+        path: "/share-recipe",
+        element: <Share />,
       },
       {
         path: "admin-panel",
