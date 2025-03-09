@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import uploadImage from "../helpers/uploadImage";
 import DisplayImage from "./DisplayImage";
 import { MdDelete } from "react-icons/md";
 import SummaryApi from "../common";
@@ -29,7 +30,15 @@ const UploadProduct = ({ onClose, fetchData }) => {
   };
 
   const handleUploadProduct = async (e) => {
-   
+    const file = e.target.files[0];
+    const uploadImageCloudinary = await uploadImage(file);
+
+    setData((preve) => {
+      return {
+        ...preve,
+        productImage: [...preve.productImage, uploadImageCloudinary.url],
+      };
+    });
   };
 
   const handleDeleteProductImage = async (index) => {
@@ -65,7 +74,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
     if (responseData.success) {
       toast.success(responseData?.message);
-      // onClose()
+       //onClose()
       // fetchData()
     }
 
@@ -75,14 +84,14 @@ const UploadProduct = ({ onClose, fetchData }) => {
   };
 
   return (
-    <div className="fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center">
-      <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden">
+    <div className="fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center ">
+      <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[70%] overflow-hidden mt-10">
         <div className="flex justify-between items-center pb-3">
           <h2 className="font-bold text-lg">Upload Recipe</h2>
           <div
             className="w-fit ml-auto text-2xl hover:text-red-600 cursor-pointer"
             onClick={onClose}
-          >
+          >  
             <CgClose />
           </div>
         </div>
@@ -91,7 +100,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
           className="grid p-4 gap-2 overflow-y-scroll h-full pb-5"
           onSubmit={handleSubmit}
         >
-          <label htmlFor="recipeName">Recipe Name :</label>
+          <label htmlFor="recipeName">Recipe Name : </label>
           <input
             type="text"
             id="recipeName"
@@ -198,12 +207,12 @@ const UploadProduct = ({ onClose, fetchData }) => {
           ></textarea>
 
           <button className="px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700">
-            Upload Recipe
+            Upload Product
           </button>
         </form>
       </div>
 
-      {/*display image full screen */}
+      {/***display image full screen */}
       {openFullScreenImage && (
         <DisplayImage
           onClose={() => setOpenFullScreenImage(false)}
@@ -215,4 +224,3 @@ const UploadProduct = ({ onClose, fetchData }) => {
 };
 
 export default UploadProduct;
-

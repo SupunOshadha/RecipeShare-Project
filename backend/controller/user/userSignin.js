@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const userModel = require("../models/userModel");
+const userModel = require("../../models/userModel");
 const jwt = require("jsonwebtoken");
 
 async function userSigninController(req, res) {
@@ -37,19 +37,19 @@ async function userSigninController(req, res) {
         message: "Login Successfully",
         data: token,
         success: true,
+        secure: true,
+        sameSite: "None",
         error: false,
       });
     } else {
       throw new Error("Please check password");
     }
   } catch (err) {
-    res.json[
-      {
-        message: err.message || err,
-        error: true,
-        success: false,
-      }
-    ];
+    res.json({
+      message: err.message || "internal server error",
+      error: true,
+      success: false,
+    });
   }
 }
 

@@ -2,11 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import ForgotPassword from "../pages/ForgotPassword";
+import RequestPasswordReset from "../components/RequestPasswordReset ";
+import ResetPassword from "../components/ResetPassword";
 import SignUp from "../pages/SignUp";
-import AddRecipe from "../pages/addrecipe";
-import About from "../pages/about";
+import AdminPanel from "../pages/AdminPanel";
+import AllUsers from "../pages/AllUsers";
 import UploadRecipe from "../components/UploadRecipe";
+import AllProducts from "../pages/AllProducts";
+import ProductDetails from "../pages/ProductDetails";
+import AboutUs from "../pages/about";
+import Share from "../components/Share";
 
 const router = createBrowserRouter([
   {
@@ -22,26 +27,47 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/forgot password",
-        element: <ForgotPassword />,
+        path: "/about-us",
+        element: <AboutUs />,
       },
       {
-        path: "/sign up",
+        path: "/forgot-password",
+        element: <RequestPasswordReset />,
+      },
+      {
+        path: "/reset-password/:token",
+        element: <ResetPassword />,
+      },
+      {
+        path: "/sign-up",
         element: <SignUp />,
       },
       {
-        path: "/addrecipe",
-        element: <AddRecipe />,
-        
-      },
-      {
-        path: "/about",
-        element: <About />,
+        path: "product/:id",
+        element: <ProductDetails />,
       },
       {
         path: "/upload-recipe",
-        element: <UploadRecipe />,
-      }
+        element: <UploadRecipe />,
+      },
+      {
+        path: "/share-recipe",
+        element: <Share />,
+      },
+      {
+        path: "admin-panel",
+        element: <AdminPanel />,
+        children: [
+          {
+            path: "all-users",
+            element: <AllUsers />,
+          },
+          {
+            path: "all-products",
+            element: <AllProducts />,
+          },
+        ],
+      },
     ],
   },
 ]);

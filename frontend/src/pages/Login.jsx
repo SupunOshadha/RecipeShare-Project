@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import loginIcons from "../assets/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import mealLoging from "../assets/foods/meallog.jpg";
 import summaryApi from "../common";
 import { toast } from "react-toastify";
+import Context from "../context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const { fetchUserDetails } = useContext(Context);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -36,22 +38,25 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     });
+
     const dataApi = await dataResponse.json();
-    console.log(dataApi); // Debug response
 
     if (dataApi.success) {
       toast.success(dataApi.message);
       navigate("/");
+      fetchUserDetails();
     }
+
     if (dataApi.error) {
       toast.error(dataApi.message);
     }
   };
+
   return (
     <section id="login">
       <div className="mx-auto container p-4 flex justify-center basis-auto ">
-        <div className="w-full md:max-w-3xl hidden md:block ">
-          <img src={mealLoging} className="bg-cover h-full" alt="meal " />
+        <div className="w-full md:max-w-2xl hidden md:block ">
+          <img src={mealLoging} className="bg-cover h-full " alt="meal " />
         </div>
         <div className=" bg-white p-2 py-5 w-full max-w-lg ">
           <div className="w-20 h-20 mx-auto">
@@ -92,7 +97,7 @@ const Login = () => {
                 </div>
               </div>
               <Link
-                to={"/forgot password"}
+                to={"/forgot-password"}
                 className="block ml-auto hover:underline w-fit hover:text-red-600 "
               >
                 Forgot password
@@ -106,7 +111,7 @@ const Login = () => {
           <p className="my-4">
             Don't have an account ?{" "}
             <Link
-              to={"/sign up"}
+              to={"/sign-up"}
               className="text-red-500 hover:text-red-300  hover:underline"
             >
               Sign up

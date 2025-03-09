@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { CgClose } from "react-icons/cg";
+import productCategory from "../helpers/productCategory";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import uploadImage from "../helpers/uploadImage";
 import DisplayImage from "./DisplayImage";
 import { MdDelete } from "react-icons/md";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ onClose, fetchData }) => {
+const AdminEditProduct = ({ onClose, productData, fetchdata }) => {
   const [data, setData] = useState({
-    recipeName: "",
-    category: "",
-    productImage: [],
-    instructions: "",
-    ingredients: "",
+    ...productData,
+    recipeName: productData?.recipeName,
+    category: productData?.category,
+    productImage: productData?.productImage || [],
+    instructions: productData?.instructions,
+    ingredients: productData?.ingredients,
   });
   const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
   const [fullScreenImage, setFullScreenImage] = useState("");
@@ -29,7 +32,15 @@ const UploadProduct = ({ onClose, fetchData }) => {
   };
 
   const handleUploadProduct = async (e) => {
-   
+    const file = e.target.files[0];
+    const uploadImageCloudinary = await uploadImage(file);
+
+    setData((preve) => {
+      return {
+        ...preve,
+        productImage: [...preve.productImage, uploadImageCloudinary.url],
+      };
+    });
   };
 
   const handleDeleteProductImage = async (index) => {
@@ -52,8 +63,8 @@ const UploadProduct = ({ onClose, fetchData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(SummaryApi.uploadRecipe.url, {
-      method: SummaryApi.uploadRecipe.method,
+    const response = await fetch(SummaryApi.updateProduct.url, {
+      method: SummaryApi.updateProduct.method,
       credentials: "include",
       headers: {
         "content-type": "application/json",
@@ -65,8 +76,8 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
     if (responseData.success) {
       toast.success(responseData?.message);
-      // onClose()
-      // fetchData()
+      onClose();
+      fetchdata();
     }
 
     if (responseData.error) {
@@ -78,7 +89,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
     <div className="fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center">
       <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden">
         <div className="flex justify-between items-center pb-3">
-          <h2 className="font-bold text-lg">Upload Recipe</h2>
+          <h2 className="font-bold text-lg">Edit Recipe</h2>
           <div
             className="w-fit ml-auto text-2xl hover:text-red-600 cursor-pointer"
             onClick={onClose}
@@ -95,7 +106,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
           <input
             type="text"
             id="recipeName"
-            placeholder="enter recipe name"
+            placeholder="enter product name"
             name="recipeName"
             value={data.recipeName}
             onChange={handleOnChange}
@@ -104,18 +115,24 @@ const UploadProduct = ({ onClose, fetchData }) => {
           />
 
           <label htmlFor="category" className="mt-3">
-            Recipe Cuisine type :
+            Category :
           </label>
-          <input
-            type="text"
-            id="category"
-            placeholder="enter Cuisine name"
+          <select
+            required
             value={data.category}
             name="category"
             onChange={handleOnChange}
             className="p-2 bg-slate-100 border rounded"
-            required
-          />
+          >
+            <option value={""}>Recipe Cuisine Type</option>
+            {productCategory.map((el, index) => {
+              return (
+                <option value={el.value} key={el.value + index}>
+                  {el.label}
+                </option>
+              );
+            })}
+          </select>
 
           <label htmlFor="productImage" className="mt-3">
             Recipe Image :
@@ -126,7 +143,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 <span className="text-4xl">
                   <FaCloudUploadAlt />
                 </span>
-                <p className="text-sm">Upload Product Image</p>
+                <p className="text-sm">Upload Recipe Image</p>
                 <input
                   type="file"
                   id="uploadImageInput"
@@ -166,19 +183,19 @@ const UploadProduct = ({ onClose, fetchData }) => {
               </div>
             ) : (
               <p className="text-red-600 text-xs">
-                *Please upload product image
+                *Please upload recipe image
               </p>
             )}
           </div>
 
           <label htmlFor="ingredients" className="mt-3">
-            Ingedients :
+            Ingredients :
           </label>
           <input
             type="text"
             id="ingredients"
             placeholder="enter ingredients"
-            value={data.price}
+            value={data.ingredients}
             name="ingredients"
             onChange={handleOnChange}
             className="p-2 bg-slate-100 border rounded"
@@ -190,7 +207,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
           </label>
           <textarea
             className="h-28 bg-slate-100 border resize-none p-1"
-            placeholder="enter steps"
+            placeholder="enter recipe instructions"
             rows={3}
             onChange={handleOnChange}
             name="instructions"
@@ -198,12 +215,12 @@ const UploadProduct = ({ onClose, fetchData }) => {
           ></textarea>
 
           <button className="px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700">
-            Upload Recipe
+            Update Product
           </button>
         </form>
       </div>
 
-      {/*display image full screen */}
+      {/***display image full screen */}
       {openFullScreenImage && (
         <DisplayImage
           onClose={() => setOpenFullScreenImage(false)}
@@ -214,5 +231,4 @@ const UploadProduct = ({ onClose, fetchData }) => {
   );
 };
 
-export default UploadProduct;
-
+export default AdminEditProduct;
