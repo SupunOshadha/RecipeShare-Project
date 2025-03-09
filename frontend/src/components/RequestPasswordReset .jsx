@@ -8,7 +8,7 @@ const RequestPasswordReset = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:8080/api/forgot-password",
+        "https://recipeshare-project-production.up.railway.app/api/forgot-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

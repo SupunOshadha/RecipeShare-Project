@@ -24,7 +24,7 @@ const ResetPassword = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/reset-password/${token}`,
+        `https://recipeshare-project-production.up.railway.app/api/reset-password/${token}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
