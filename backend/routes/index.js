@@ -20,9 +20,8 @@ const getCategoryProduct = require("../controller/product/getCategoryProduct");
 const getCategoryWiseProduct = require("../controller/product/getCategoryWiseProduct");
 const getProductDetails = require("../controller/product/getProductDetails");
 const addRating  = require("../controller/product/addRating");
-
-
-
+const addComments = require("../controller/product/addComments");
+const getComments = require("../controller/product/getAllComments");
 
 router.post("/product/:productId/rate", authToken, addRating);
 router.post("/signup", userSignupController);
@@ -48,5 +47,7 @@ router.get("/get-product", getProductController);
 router.get("/get-categoryProduct", getCategoryProduct);
 router.post("/category-product", getCategoryWiseProduct);
 router.post("/product-details", getProductDetails);
+router.post("/product/:productId/comments", authToken, addComments);
+router.get("/product/:id/comments", getComments);
 
 module.exports = router;

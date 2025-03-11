@@ -77,6 +77,14 @@ const summaryApi = {
     url: `${backendDomain}/api/product`,
     method: "post",
   },
+  addComments: {
+    url: `${backendDomain}/api/product`,
+    method: "post",
+  },
+  getComments: {
+    url: `${backendDomain}/api/product`,
+    method: "get",
+  },
 };
 
 export default summaryApi;

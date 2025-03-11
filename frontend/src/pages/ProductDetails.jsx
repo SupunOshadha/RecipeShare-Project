@@ -28,6 +28,40 @@ const ProductDetails = () => {
 
   const navigate = useNavigate();
 
+   const [comments, setComments] = useState([]);    ///
+   const [newComment, setNewComment] = useState("");
+
+   useEffect(() => {
+    fetchComments();
+  }, [params]); // Fetch comments when page loads  ///   
+
+  // fetching comments
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`${SummaryApi.getComments.url}/${params.id}/comments`, {
+        method: SummaryApi.getComments.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+  
+      if (!response.ok) {
+        console.error("Failed to fetch comments");
+        setComments([]); // Prevent undefined errors
+        return;
+      }
+  
+      const dataResponse = await response.json();
+      console.log("Fetched Comments Data:", dataResponse); // Debugging
+  
+      setComments(Array.isArray(dataResponse.comments) ? dataResponse.comments : []);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      setComments([]);
+    }
+  };
+
   //  Fetch product details
   const fetchProductDetails = async () => {
     setLoading(true);
@@ -59,7 +93,7 @@ const ProductDetails = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", //  Ensure auth is included
+          credentials: "include",
           body: JSON.stringify({
             rating,
           }),
@@ -101,6 +135,28 @@ const ProductDetails = () => {
       `/share-recipe?recipeName=${encodeURIComponent(data?.recipeName)}&recipeUrl=${encodeURIComponent(window.location.href)}`
     );
   };
+
+  ///add comments///
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+  
+    const response = await fetch(`${SummaryApi.addComments.url}/${params.id}/comments`, {
+      method: SummaryApi.addComments.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ text: newComment }),
+    });
+  
+    if (response.ok) {
+      setNewComment("");
+      fetchComments(); // Refresh comments after posting
+    } else {
+      console.error("Failed to add comment");
+    }
+  };
+  
 
   return (
     <div className="container mx-auto p-4">
@@ -202,6 +258,52 @@ const ProductDetails = () => {
           <p className="text-slate-600 font-medium my-1">Instructions:</p>
           <p>{data?.instructions}</p>
         </div>
+      </div>
+      <div>
+      <div className="mt-4">
+  <h3 className="text-lg font-bold">Comments:</h3>
+  {comments.length === 0 ? (
+    <p className="text-gray-500">No comments yet. Be the first to comment!</p>
+  ) : (
+    comments.map((comment, index) => (
+      <div key={index} className="bg-gray-100 p-2 rounded-md mb-2">
+        <p className="font-semibold">{comment?.user?.name || "Anonymous"}:</p>
+        <p>{comment.text}</p>
+        <p className="text-xs text-gray-500">{new Date(comment.createdAt).toLocaleString()}</p>
+      </div>
+    ))
+  )}
+  {/* {(comments && comments.length > 0) ? (
+  comments.map((comment, index) => (
+    <div key={index} className="bg-gray-100 p-2 rounded-md mb-2">
+      <p className="font-semibold">{comment?.user?.name || "Anonymous"}:</p>
+      <p>{comment?.text || "No text available"}</p>
+      <p className="text-xs text-gray-500">{comment?.createdAt ? new Date(comment.createdAt).toLocaleString() : "Unknown date"}</p>
+    </div>
+  ))
+) : (
+  <p className="text-gray-500">No comments yet. Be the first to comment!</p>
+)} */}
+
+</div>
+
+{/* Comment input field */}
+<div className="mt-2">
+  <input
+    className="rounded-full p-2 w-full shadow border outline-none"
+    type="text"
+    placeholder="Enter your comment..."
+    value={newComment}
+    onChange={(e) => setNewComment(e.target.value)}
+  />
+  <button
+    className="bg-red-500 text-white px-4 py-1 rounded mt-2"
+    onClick={handleAddComment}
+  >
+    Add Comment
+  </button>
+</div>
+
       </div>
 
       {data.category && <CategroyWiseProductDisplay category={data?.category} heading="Recommended Recipes" />}

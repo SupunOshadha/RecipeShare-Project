@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from "../helpers/uploadImage";
@@ -7,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ onClose, fetchData }) => {
+const UploadProduct = () => {
   const [data, setData] = useState({
     recipeName: "",
     category: "",
@@ -17,6 +18,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
   });
   const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
   const [fullScreenImage, setFullScreenImage] = useState("");
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -74,8 +76,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
     if (responseData.success) {
       toast.success(responseData?.message);
-       //onClose()
-      // fetchData()
+      navigate("/");
     }
 
     if (responseData.error) {
@@ -90,8 +91,8 @@ const UploadProduct = ({ onClose, fetchData }) => {
           <h2 className="font-bold text-lg">Upload Recipe</h2>
           <div
             className="w-fit ml-auto text-2xl hover:text-red-600 cursor-pointer"
-            onClick={onClose}
-          >  
+            onClick={() => navigate("/")}
+          >
             <CgClose />
           </div>
         </div>
