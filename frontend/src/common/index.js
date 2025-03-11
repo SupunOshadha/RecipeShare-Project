@@ -1,5 +1,5 @@
-const backendDomain = "http://localhost:8080";
-//nst backendDomain = "https://recipeshare-project-production.up.railway.app";
+//const backendDomain = "http://localhost:8080";
+const backendDomain = "https://recipeshare-project-production.up.railway.app";
 
 const summaryApi = {
   signUp: {
