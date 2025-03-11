@@ -1,23 +1,20 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const productSchema = mongoose.Schema(
-  {
-    recipeName: String,
-    category: String,
-    productImage: [],
-    instructions: String,
-    ingredients: String,
-    status: {
-      type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending",
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+const productSchema = new mongoose.Schema({
+  recipeName: { type: String, required: true },
+  category: { type: String, required: true },
+  productImage: [{ type: String }],
+  instructions: { type: String },
+  ingredients: { type: String },
+  ratings: [
+    {
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      rating: { type: Number, required: true }
+    }
+  ],
+  averageRating: { type: Number, default: 0 } //  Store average rating
+});
 
-const productModel = mongoose.model("product", productSchema);
+const Product = mongoose.model('Product', productSchema);
 
-module.exports = productModel;
+module.exports = Product;

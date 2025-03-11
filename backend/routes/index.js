@@ -19,7 +19,12 @@ const deleteUserController = require("../controller/user/deleteUserController");
 const getCategoryProduct = require("../controller/product/getCategoryProduct");
 const getCategoryWiseProduct = require("../controller/product/getCategoryWiseProduct");
 const getProductDetails = require("../controller/product/getProductDetails");
+const addRating  = require("../controller/product/addRating");
 
+
+
+
+router.post("/product/:productId/rate", authToken, addRating);
 router.post("/signup", userSignupController);
 router.post("/signin", userSigninController);
 router.get("/user-details", authToken, userDetailsController);
